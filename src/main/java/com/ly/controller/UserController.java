@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by ly on 2017/10/8 18:13
  */
 @Controller
+@ResponseBody
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
