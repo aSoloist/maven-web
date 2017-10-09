@@ -5,6 +5,18 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:annotation-config />
+    
+    <context:component-scan base-package="com.ly.service">
+        
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        
+    </context:component-scan>
+    
+    <context:component-scan base-package="com.ly.dao">
+        
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        
+    </context:component-scan>
 
     <!-- 读取配置文件 -->
     <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -17,27 +29,27 @@
 
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driver}"></property>
-        <property name="url" value="${jdbc.url}"></property>
-        <property name="username" value="${jdbc.username}"></property>
-        <property name="password" value="${jdbc.password}"></property>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
         <!--<property name="loginTimeout" value="${jdbc.loginTimeout}"></property>-->
     </bean>
 
     <!-- 配置 SessionFactory -->
     <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
-        <property name="dataSource" ref="dataSource"></property>
-        <!--<property name="mapperLocations" value="classpath:com/wenka/mapper/*"></property>-->
-        <property name="typeAliasesPackage" value="com.wenka.model"></property>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*"/>
+        <property name="typeAliasesPackage" value="com.ly.model"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="mapperScannerConfigurer">
-        <property name="basePackage" value="com.wenka.dao"></property>
+        <property name="basePackage" value="com.ly.dao"/>
     </bean>
 
     <!-- 事务 -->
     <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="dataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"></property>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <tx:annotation-driven transaction-manager="dataSourceTransactionManager" proxy-target-class="true" />
