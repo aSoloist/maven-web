@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form method="get" action="${pageContext.request.contextPath}/users/getUser.do">
+    <form method="get" action="${pageContext.request.contextPath}/users/login.do">
 
         <label>
             用户名：<input type="text" name="username"><br/>
