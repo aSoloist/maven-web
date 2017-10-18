@@ -60,4 +60,14 @@ public class User {
     public void setCreate_time(Date create_time) {
         this.create_time = create_time;
     }
+    
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", create_time=" + create_time +
+                '}';
+    }
 }
