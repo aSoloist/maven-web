@@ -1,17 +1,22 @@
 package com.ly.controller;
 
+import com.ly.annotation.LoginNotRequired;
 import com.ly.model.User;
 import com.ly.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by ly on 2017/10/8 18:13
  */
-@Controller
+@RestController
 @ResponseBody
 @RequestMapping("/users")
+@LoginNotRequired
 public class UserController {
     private final UserService userService;
 
@@ -20,9 +25,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/getUser", method = RequestMethod.GET)
-    public User getUser(String username, String password) {
-        return userService.getUser(username, password);
+    @RequestMapping("/login")
+    public User Login(HttpServletRequest request) {
+        String username = StringUtils.trimToEmpty(request.getParameter("username"));
+        String password = StringUtils.trimToEmpty(request.getParameter("password"));
+        
+        User user = userService.getUser(username, password);
+        
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        } else {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", user);
+            return user;
+        }
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
