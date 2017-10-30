@@ -2,6 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ly.dao.ArticleDao">
     
-    <select id="getArticle" resultType="com.ly.model.Article"></select>
+    <select id="getArticle" resultMap="articleResultMap">
+    
+        SELECT * FROM article a, user u WHERE a.author_id = u.id;
+  
+    </select>
+    
+    <select id="getArticleByUser" parameterType="String" resultMap="articleResultMap" >
+        
+        SELECT * FROM article a, user u WHERE a.author_id = u.id AND u.id = #{u_id};
+        
+    </select>
+    
+    <select id="getArticleById" parameterType="String" resultMap="articleResultMap">
+        
+        SELECT * FROM article WHERE id = #{id};
+        
+    </select>
+    
+    <insert id="insertArticle" parameterType="com.ly.model.Article">
+        
+        INSERT INTO article VALUES (#{id}, #{title}, #{content}, #{author.id}, #{create_time})
+        
+    </insert>
+    
+    <resultMap id="articleResultMap" type="com.ly.model.Article">
+        
+        <id property="id" column="id" />
+        
+        <result property="title" column="title" />
+        
+        <result property="content" column="content" />
+        
+        <result property="create_time" column="create_time" />
+        
+        <association property="author" javaType="com.ly.model.User">
+            
+            <id property="id" column="id" />
+            
+            <result property="username" column="username" />
+            
+            <result property="email" column="email" />
+            
+            <result property="create_time" column="create_time" />
+            
+        </association>
+        
+    </resultMap>
     
 </mapper>

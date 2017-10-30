@@ -19,7 +19,7 @@ public class Article {
     private User author;
     //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date creat_time = new Date();
+    private Date create_time = new Date();
 
     public String getId() {
         return id;
@@ -53,11 +53,11 @@ public class Article {
         this.author = author;
     }
 
-    public Date getCreat_time() {
-        return creat_time;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreat_time(Date creat_time) {
-        this.creat_time = creat_time;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 }
